@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triumph Odili - Software Engineer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #0099cc;
+            --primary-light: rgba(0, 153, 204, 0.1);
+            --primary-medium: rgba(0, 153, 204, 0.3);
+            --primary-dark: rgba(0, 153, 204, 0.8);
+            --text-dark: #333;
+            --text-medium: #666;
+            --text-light: #999;
+            --background: #fff;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --border-color: rgba(0, 153, 204, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+            --radius: 0.5rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--background);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        a {
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Background Elements */
+        .background-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .gradient-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 500px;
+            background: linear-gradient(to bottom, rgba(0, 153, 204, 0.05), transparent);
+        }
+
+        .circle-1 {
+            position: absolute;
+            top: 20%;
+            right: 5%;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            filter: blur(80px);
+            opacity: 0.7;
+        }
+
+        .circle-2 {
+            position: absolute;
+            top: 60%;
+            left: 5%;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            filter: blur(80px);
+            opacity: 0.7;
+        }
+
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to right, rgba(0, 153, 204, 0.05) 1px, transparent 1px),
+                            linear-gradient(to bottom, rgba(0, 153, 204, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.3;
+        }
+
+        .dots-pattern {
+            position: absolute;
+            top: 40%;
+            left: 0;
+            width: 100%;
+            height: 600px;
+            background-image: radial-gradient(rgba(0, 153, 204, 0.2) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+            background-color: transparent;
+        }
+
+        header.scrolled {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 4rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .desktop-nav ul {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .desktop-nav a {
+            color: var(--text-medium);
+            font-weight: 500;
+        }
+
+        .desktop-nav a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-medium);
+            font-size: 1.25rem;
+            cursor: pointer;
+        }
+
+        .mobile-nav {
+            display: none;
+            padding: 1rem 0;
+            border-top: 1px solid var(--border-color);
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav ul {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .mobile-nav a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--text-medium);
+        }
+
+        .mobile-nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem 0 4rem;
+        }
+
+        .profile-picture {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: var(--primary-light);
+            border: 4px solid rgba(0, 153, 204, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            color: rgba(0, 153, 204, 0.6);
+            background-color: var(--primary-light);
+        }
+
+        .profile-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-placeholder p {
+            font-size: 0.875rem;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .hero-content {
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-content h2 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--text-medium);
+            margin-bottom: 1rem;
+        }
+
+        .location {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            color: var(--text-medium);
+            margin-bottom: 1.5rem;
+        }
+
+        .location .label {
+            font-weight: 500;
+        }
+
+        .primary-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .primary-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .primary-btn:hover::after {
+            opacity: 1;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 3rem 0;
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, rgba(0, 153, 204, 0.5), transparent);
+            border-radius: 2px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: rgba(0, 153, 204, 0.3);
+            border-radius: 1.5px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            backdrop-filter: blur(5px);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 153, 204, 0.1);
+        }
+
+        /* Education Section */
+        .education-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .icon-container {
+            flex-shrink: 0;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        .education-details h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .institution {
+            color: var(--text-medium);
+            margin-bottom: 0.5rem;
+        }
+
+        .date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .project-meta {
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-content p {
+            margin-bottom: 1rem;
+        }
+
+        .project-content ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Courses Section */
+        .courses-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .course-card {
+            padding: 1.5rem;
+        }
+
+        .course-content {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .course-details h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .course-details .institution {
+            color: var(--text-medium);
+            margin-bottom: 0.25rem;
+        }
+
+        .course-details .description {
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill-badge {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid rgba(0, 153, 204, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .skill-badge:hover {
+            background-color: rgba(0, 153, 204, 0.2);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-details .label {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-details a {
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .contact-details a:hover {
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(0, 153, 204, 0.05);
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+            text-align: center;
+            color: var(--text-medium);
+            margin-top: 3rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Media Queries */
+        @media (min-width: 768px) {
+            .hero {
+                flex-direction: row;
+                text-align: left;
+                justify-content: center;
+                padding: 4rem 0 6rem;
+            }
+
+            .hero-content {
+                text-align: left;
+            }
+
+            .location {
+                justify-content: flex-start;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .desktop-nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .section:nth-child(2) { animation-delay: 0.1s; }
+        .section:nth-child(3) { animation-delay: 0.2s; }
+        .section:nth-child(4) { animation-delay: 0.3s; }
+        .section:nth-child(5) { animation-delay: 0.4s; }
+        .section:nth-child(6) { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="background-elements">
+        <div class="gradient-bg"></div>
+        <div class="circle-1"></div>
+        <div class="circle-2"></div>
+        <div class="grid-pattern"></div>
+        <div class="dots-pattern"></div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="logo">Triumph Odili</div>
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <nav class="mobile-nav">
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="profile-picture">
+                <!-- Static profile placeholder - replace this with your image by adding an <img> tag here -->
+                <div class="profile-placeholder">
+                    <i class="fas fa-user"></i>
+                    <p>Profile Photo</p>
+                </div>
+                <!-- To add your image manually, replace the div above with:
+                <img src="path/to/your/image.jpg" alt="Triumph Odili" style="width: 100%; height: 100%; object-fit: cover;"> -->
+            </div>
+            <div class="hero-content">
+                <h1>Triumph Odili</h1>
+                <h2>Software Engineer</h2>
+                <div class="location">
+                    <span class="label">Location:</span>
+                    <span>Delta State, Nigeria</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <h2 class="section-title">About Me</h2>
+            <div class="card">
+                <p>
+                    Software Engineering student at Babcock University with experience in game development and web design,
+                    in search of opportunities to grow as a back-end software engineer. Developed a 2D arcade-style game using
+                    Python and Pygame, applying object-oriented programming and game logic. Also built simple, responsive
+                    websites using HTML, CSS, and JavaScript. Currently focused on learning back-end development, particularly with
+                    JavaScript and related tools.
+                </p>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="section">
+            <h2 class="section-title">Education</h2>
+            <div class="card">
+                <div class="education-item">
+                    <div class="icon-container">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="education-details">
+                        <h3>Bachelor of Science, Software Engineering</h3>
+                        <p class="institution">Babcock University, Ogun State, Nigeria</p>
+                        <div class="date">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>October 2023 - Present</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <h2 class="section-title">Projects</h2>
+            <div class="projects-grid">
+                <!-- Alien Invasion Game -->
+                <div class="card project-card">
+                    <div class="project-header">
+                        <div class="icon-container">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3>Alien Invasion Game</h3>
+                    </div>
+                    <div class="project-meta">
+                        Solo Project | Python, Pygame | February 2025 - Present
+                    </div>
+                    <div class="project-content">
+                        <ul>
+                            <li>Developed a fast-paced 2D arcade shooter game where the player defends against waves of alien invaders using a spaceship.</li>
+                            <li>Implemented core gameplay features including:</li>
+                            <li>Used object-oriented programming to structure game components (player, aliens, bullets and scoreboard) for scalability and maintainability.</li>
+                            <li>Added real time scoring, intuitive controls, and a clear Game Over state for an engaging user experience.</li>
+                            <li>Demonstrated proficiency in event handling, game loop design, and 2D animation using Pygame.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sense Connect -->
+                <div class="card project-card">
+                    <div class="project-header">
+                        <div class="icon-container">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3>Sense Connect</h3>
+                    </div>
+                    <div class="project-meta">
+                        Frontend Developer | HTML, CSS | March 2025
+                    </div>
+                    <div class="project-content">
+                        <p>Inclusive Web Platform for People with Disabilities</p>
+                        <p>
+                            Contributed to the development of Sense Connect, an inclusive web platform designed
+                            to support individuals with disabilities such as deaf-blindness, mental health challenges,
+                            and mobility impairments. Responsibilities included:
+                        </p>
+                        <ul>
+                            <li>Designed and built the responsive landing page using HTML and CSS, ensuring a clean and accessible user interface tailored for differently abled users.</li>
+                            <li>Focused on accessibility-first design, implementing visual elements that support screen readers and font adjustments.</li>
+                            <li>Collaborated with the development team to ensure consistency across the user dashboard and community features.</li>
+                            <li>Helped present the platform's key offerings such as guardian-assisted navigation, speech-to-text support, and learning resources in a user-friendly manner.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Courses Section -->
+        <section id="courses" class="section">
+            <h2 class="section-title">Courses</h2>
+            <div class="courses-list">
+                <div class="card course-card">
+                    <div class="course-content">
+                        <div class="icon-container">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="course-details">
+                            <h3>Backend Development</h3>
+                            <p class="institution">Tech Crush</p>
+                            <p class="description">Learning backend development using JavaScript</p>
+                            <div class="date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>March 2025 - Present</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card course-card">
+                    <div class="course-content">
+                        <div class="icon-container">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="course-details">
+                            <h3>Introduction to Programming</h3>
+                            <p class="institution">EDX</p>
+                            <div class="date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>January 2024 - March 2024</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <h2 class="section-title">Skills</h2>
+            <div class="card">
+                <div class="skills-container">
+                    <span class="skill-badge">Communication skills</span>
+                    <span class="skill-badge">JavaScript</span>
+                    <span class="skill-badge">Python</span>
+                    <span class="skill-badge">PHP</span>
+                    <span class="skill-badge">MySQL</span>
+                    <span class="skill-badge">Java</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2 class="section-title">Contact</h2>
+            <div class="card">
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <div class="icon-container">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <p class="label">Email</p>
+                            <a href="mailto:odilitriumphifeatu@gmail.com">odilitriumphifeatu@gmail.com</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="icon-container">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <p class="label">Phone</p>
+                            <a href="tel:+2349067397822">+234 906 739 7822</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="icon-container">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <p class="label">Location</p>
+                            <p>Delta State, Nigeria</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> Triumph Odili. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileNav = document.querySelector('.mobile-nav');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileNav.classList.toggle('active');
+                
+                // Toggle icon between bars and X
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('fa-bars')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+
+            // Close mobile menu when clicking a link
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileNav.classList.remove('active');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                });
+            });
+
+            // Header scroll effect
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 10) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80, // Offset for header
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Add animation to cards when they come into view
+            const observeElements = document.querySelectorAll('.card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            observeElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
