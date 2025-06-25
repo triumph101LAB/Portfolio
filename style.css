@@ -40,6 +40,10 @@
             margin: 0 auto;
             padding: 0 1rem;
         }
+        .prolink{
+            text-decoration: underline;
+            color: rgba(0, 81, 255, 0.498);
+        }
 
         a {
             color: var(--text-dark);
